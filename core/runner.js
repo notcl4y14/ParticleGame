@@ -1,16 +1,12 @@
 export default class Runner {
 
 	ticks;
+	running;
+	
 	delta;
 	lastTime;
 
-	running;
-
 	loopFunc;
-
-	get FPS () {
-		return 1000 / this.delta;
-	}
 
 	constructor () {
 		this.ticks = 0;
@@ -18,6 +14,14 @@ export default class Runner {
 		this.lastTime = 0;
 		this.running = false;
 	}
+
+	// ==== Properties ==== //
+
+	get FPS () {
+		return 1000 / this.delta;
+	}
+
+	// ==== Start/Stop ==== //
 
 	async start () {
 		this.running = true;
@@ -27,6 +31,8 @@ export default class Runner {
 	stop () {
 		this.running = false;
 	}
+
+	// ==== Loop ==== //
 
 	loop () {
 		if (!this.running) {
