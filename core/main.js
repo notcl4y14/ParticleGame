@@ -1,3 +1,4 @@
+import CellPowder from "../common/cellular/cells/powder.js";
 import Cell from "./cellular/cell.js";
 import Chunk from "./cellular/chunk.js";
 import Display from "./display.js";
@@ -22,10 +23,18 @@ const init = function () {
 	initDisplay();
 	initRunner();
 
-	const cell = new Cell();
+	const cell = new CellPowder();
 	cell.ID = 1;
 
-	chunk.setCell(cell, 10, 10);
+	chunk.setCell(cell, 10, 0);
+	chunk.setCell(cell, 10, 1);
+	chunk.setCell(cell, 10, 2);
+	chunk.setCell(cell, 10, 3);
+	chunk.setCell(cell, 10, 4);
+	chunk.setCell(cell, 10, 5);
+	chunk.setCell(cell, 10, 6);
+	chunk.setCell(cell, 10, 7);
+	// chunk.setCell(cell, 10, 8);
 
 	runner.start();
 }
@@ -46,7 +55,10 @@ const loop = function () {
 	draw();
 }
 
-const update = function () {}
+const update = function () {
+	if (runner.ticks % 4 == 0)
+		chunk.update();
+}
 
 const draw = function () {
 	Display.clearScreen();

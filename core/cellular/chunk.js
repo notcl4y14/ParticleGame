@@ -56,6 +56,16 @@ export default class Chunk {
 		return newInstance;
 	}
 
+	// ==== Properties ==== //
+
+	get width () {
+		return this.#width;
+	}
+
+	get height () {
+		return this.#height;
+	}
+
 	// ==== Getters/Setters ==== //
 
 	getCell (x, y) {
@@ -64,6 +74,35 @@ export default class Chunk {
 
 	setCell (cell, x, y) {
 		this.#world[this.#convertPosIndex(x, y)] = cell;
+	}
+
+	// ==== Cells ==== //
+
+	isCellEmpty (x, y) {
+		return !this.checkPosOut(x, y) && this.getCell(x, y).ID == 0;
+	}
+
+	swapCells (srcX, srcY, destX, destY) {
+		const srcCell = this.getCell(srcX, srcY);
+		const destCell = this.getCell(destX, destY);
+
+		this.setCell(srcCell, destX, destY);
+		this.setCell(destCell, srcX, srcY);
+	}
+
+	// ==== Update ==== //
+
+	update () {
+		for (let x = 0; x != this.#width; x++) {
+			for (let y = this.#height - 1; y != -1; y--) {
+				const cell = this.getCell(x, y);
+				// this.#updateCell(cell, x, y);
+				cell.constructor.step(this, x, y);
+			}
+		}
+	}
+
+	#updateCell (cell, x, y) {
 	}
 
 	// ==== Draw ==== //
@@ -89,18 +128,12 @@ export default class Chunk {
 	}
 
 	drawPngLike() {
-		var even = true;
-
 		for (let x = 0; x != this.#width; x++) {
 			for (let y = 0; y != this.#height; y++) {
-				const color = even ? "#555555" : "#222222";
+				const color = (x + y) % 2 == 0 ? "#555555" : "#222222";
 				Display.context.fillStyle = color;
 				Display.context.fillRect(x, y, 1, 1);
-
-				even = !even;
 			}
-			
-			even = !even;
 		}
 	}
 
