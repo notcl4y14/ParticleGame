@@ -3,8 +3,11 @@ import CellPowder from "./cells/powder.js";
 
 export default class Brush {
 
-	static primaryCell = new CellPowder();
-	static altCell = new Cell();
+	static cell = new CellPowder();
+
+	static setCell (cell) {
+		this.cell = cell;
+	}
 
 	static fillRect (chunk, xPos, yPos, width, height) {
 
@@ -26,7 +29,7 @@ export default class Brush {
 		for (let x = 0; x != width; x++) {
 			for (let y = 0; y != height; y++) {
 
-				const cell = this.primaryCell.clone();
+				const cell = this.cell.clone();
 				chunk.setCell(cell, x + xPos, y + yPos);
 
 			}
@@ -35,5 +38,4 @@ export default class Brush {
 	}
 }
 
-Brush.primaryCell.ID = 1;
-Brush.altCell.ID = 0;
+Brush.cell.ID = 1;
