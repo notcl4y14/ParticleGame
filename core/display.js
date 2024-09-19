@@ -8,6 +8,10 @@ export default class Display {
 	static linkCanvas (canvas) {
 		this.canvas = canvas;
 		this.context = this.canvas.getContext("2d");
+
+		this.canvas.oncontextmenu = (event) => {
+			event.preventDefault();
+		}
 	}
 
 	static updateCanvasSize () {
