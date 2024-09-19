@@ -14,14 +14,16 @@ export default class CellPowder extends Cell {
 		const bottomEmpty = chunk.isCellEmpty(x, y + 1);
 		const bottomLEmpty = chunk.isCellEmpty(x - 1, y + 1);
 		const bottomREmpty = chunk.isCellEmpty(x + 1, y + 1);
+
+		const left = Math.random() < 0.5;
 		
 		if (!bottomEmpty) {
-			if (bottomLEmpty) {
+			if (left && bottomLEmpty) {
 				chunk.swapCells(x, y, x - 1, y + 1);
 				return;
 			}
 
-			if (bottomREmpty) {
+			if (!left && bottomREmpty) {
 				chunk.swapCells(x, y, x + 1, y + 1);
 				return;
 			}
