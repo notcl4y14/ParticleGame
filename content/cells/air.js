@@ -1,5 +1,6 @@
 import Cell from "../../core/cellular/cell.js";
 
 export default class Air extends Cell {
-	ID = 0;
+	ID = "air";
+	density = 0;
 }

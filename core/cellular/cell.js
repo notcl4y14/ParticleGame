@@ -2,6 +2,7 @@ export default class Cell {
 
 	ID;
 	color;
+	density;
 
 	// ==== Initializers ==== //
 
@@ -12,6 +13,13 @@ export default class Cell {
 
 	assignColor () {
 		this.color = this.getColor();
+	}
+
+	// ==== Chunk/Cell ==== //
+
+	canPass (chunk, x, y) {
+		const cell = chunk.getCell(x, y);
+		return cell !== null && this.density > cell?.density;
 	}
 
 	// ==== Getters ==== //

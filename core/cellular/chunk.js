@@ -1,3 +1,4 @@
+import Air from "../../content/cells/air.js";
 import Display from "../display.js";
 import Cell from "./cell.js";
 
@@ -23,8 +24,8 @@ export default class Chunk {
 		// const area = this.#width * this.#height;
 		
 		for (let i = 0; i != this.area; i++) {
-			const cell = new Cell();
-			cell.ID = 0;
+			const cell = new Air();
+			cell.init();
 			this.#world.push(cell);
 		}
 	}
@@ -79,7 +80,7 @@ export default class Chunk {
 	// ==== Cells ==== //
 
 	isCellEmpty (x, y) {
-		return !this.checkPosOut(x, y) && this.getCell(x, y).ID == 0;
+		return !this.checkPosOut(x, y) && this.getCell(x, y).ID == "air";
 	}
 
 	swapCells (srcX, srcY, destX, destY) {
@@ -90,6 +91,23 @@ export default class Chunk {
 		this.setCell(destCell, srcX, srcY);
 	}
 
+	moveCell (srcX, srcY, destX, destY) {
+		const srcCell = this.getCell(srcX, srcY);
+
+		this.setCell(new Air(), srcX, srcY);
+		this.setCell(srcCell, destX, destY);
+	}
+
+	moveAwayCell (srcX, srcY, destX, destY) {
+		// const srcCell = this.getCell(srcX, srcY);
+		// const destCell = this.getCell(destX, destY);
+
+		const direction = Math.random() > 0.5 ? 1 : -1;
+
+		this.swapCells(destX, destY, destX + direction, destY);
+		this.swapCells(srcX, srcY, destX, destY);
+	}
+
 	// ==== Update ==== //
 
 	update () {
@@ -97,7 +115,7 @@ export default class Chunk {
 			for (let y = this.#height - 1; y != -1; y--) {
 				const cell = this.getCell(x, y);
 				// this.#updateCell(cell, x, y);
-				cell.constructor.step(this, x, y);
+				cell.constructor.step(this, cell, x, y);
 			}
 		}
 	}
@@ -124,7 +142,7 @@ export default class Chunk {
 		// 		break;
 		// }
 
-		if (tile.ID == 0) {
+		if (tile.ID == "air") {
 			return;
 		}
 
