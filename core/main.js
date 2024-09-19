@@ -1,6 +1,7 @@
 import Brush from "../common/cellular/brush.js";
 import CellPowder from "../common/cellular/cells/powder.js";
 import Cursor from "../common/cellular/cursor.js";
+import Water from "../content/cells/water.js";
 import Cell from "./cellular/cell.js";
 import Chunk from "./cellular/chunk.js";
 import Display from "./display.js";
@@ -58,6 +59,8 @@ const init = function () {
 	const cell = new CellPowder();
 	cell.ID = 1;
 
+	cursor.primaryCell = new Water().init();
+
 	// chunk.setCell(cell, 10, 0);
 	// chunk.setCell(cell, 10, 1);
 	// chunk.setCell(cell, 10, 2);
@@ -90,7 +93,7 @@ const loop = function () {
 }
 
 const update = function () {
-	if (runner.ticks % 4 == 0)
+	if (runner.ticks % 2 == 0)
 		chunk.update();
 
 	cursor.x = Math.round(Mouse.x / scale - cursor.width / 2);
