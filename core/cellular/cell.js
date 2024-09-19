@@ -7,6 +7,7 @@ export default class Cell {
 
 	init () {
 		this.assignColor();
+		return this;
 	}
 
 	assignColor () {
