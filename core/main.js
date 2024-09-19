@@ -50,6 +50,15 @@ window.onmouseup = (event) => {
 	Mouse.setButton(event.button, false);
 }
 
+window.onkeydown = (event) => {
+	const key = event.code;
+
+	if (key.substring(0, 5) == "Digit") {
+		const digit = key[5];
+		cursor.setCellByID(parseInt(digit));
+	}
+}
+
 // ==== Init ==== //
 
 const init = function () {

@@ -4,8 +4,11 @@ import Display from "../../core/display.js";
 import Brush from "./brush.js";
 import Sand from "../../content/cells/sand.js";
 import Air from "../../content/cells/air.js";
+import Water from "../../content/cells/water.js";
 
 export default class Cursor {
+
+	// static IDs = [ "air", "sand", "water" ];
 
 	primaryCell = new Sand();
 	altCell = new Air();
@@ -23,6 +26,22 @@ export default class Cursor {
 		this.y = 0;
 		this.width = 1;
 		this.height = 1;
+	}
+
+	setCellByID (id) {
+		switch (id) {
+			case 0:
+				this.primaryCell = new Air();
+				break;
+
+			case 1:
+				this.primaryCell = new Sand();
+				break;
+				
+			case 2:
+				this.primaryCell = new Water();
+				break;
+		}
 	}
 
 	// ==== Drawing Methods ==== //
