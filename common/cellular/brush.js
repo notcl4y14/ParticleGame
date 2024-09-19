@@ -1,9 +1,10 @@
+import Sand from "../../content/cells/sand.js";
 import Cell from "../../core/cellular/cell.js";
 import CellPowder from "./cells/powder.js";
 
 export default class Brush {
 
-	static cell = new CellPowder();
+	static cell = new Sand();
 
 	static setCell (cell) {
 		this.cell = cell;
@@ -30,6 +31,7 @@ export default class Brush {
 			for (let y = 0; y != height; y++) {
 
 				const cell = this.cell.clone();
+				cell.assignColor();
 				chunk.setCell(cell, x + xPos, y + yPos);
 
 			}
@@ -38,4 +40,4 @@ export default class Brush {
 	}
 }
 
-Brush.cell.ID = 1;
+Brush.cell.assignColor();

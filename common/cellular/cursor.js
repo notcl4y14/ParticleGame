@@ -2,21 +2,27 @@ import Cell from "../../core/cellular/cell.js";
 import CellPowder from "./cells/powder.js";
 import Display from "../../core/display.js";
 import Brush from "./brush.js";
+import Sand from "../../content/cells/sand.js";
+import Air from "../../content/cells/air.js";
 
 export default class Cursor {
 
-	primaryCell = new CellPowder();
-	altCell = new Cell();
+	primaryCell = new Sand();
+	altCell = new Air();
 
-	x = 0;
-	y = 0;
+	x;
+	y;
 
-	width = 1;
-	height = 1;
+	width;
+	height;
 
 	constructor () {
-		this.primaryCell.ID = 1;
-		this.altCell.ID = 0;
+		this.primaryCell.init();
+		this.altCell.init();
+		this.x = 0;
+		this.y = 0;
+		this.width = 1;
+		this.height = 1;
 	}
 
 	// ==== Drawing Methods ==== //
