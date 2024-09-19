@@ -115,14 +115,20 @@ export default class Chunk {
 	}
 
 	#drawTile (tile, x, y) {
-		switch (tile.ID) {
-			case 0:
-				return;
+		// switch (tile.ID) {
+		// 	case 0:
+		// 		return;
 			
-			case 1:
-				Display.context.fillStyle = "#ffff00";
-				break;
+		// 	case 1:
+		// 		Display.context.fillStyle = "#ffff00";
+		// 		break;
+		// }
+
+		if (tile.ID == 0) {
+			return;
 		}
+
+		Display.context.fillStyle = tile.color;
 
 		Display.context.fillRect(x, y, 1, 1);
 	}
