@@ -8,10 +8,10 @@ import Mouse from "./mouse.js";
 import Runner from "./runner.js";
 
 const runner = new Runner();
-const chunk = new Chunk(32, 32);
+const chunk = new Chunk(64, 64);
 const cursor = new Cursor();
 
-const zoom = 10;
+const scale = 5;
 
 // ==== Window ==== //
 
@@ -93,8 +93,8 @@ const update = function () {
 	if (runner.ticks % 4 == 0)
 		chunk.update();
 
-	cursor.x = Math.round(Mouse.x / zoom - cursor.width / 2);
-	cursor.y = Math.round(Mouse.y / zoom - cursor.height / 2);
+	cursor.x = Math.round(Mouse.x / scale - cursor.width / 2);
+	cursor.y = Math.round(Mouse.y / scale - cursor.height / 2);
 
 	if (Mouse.isButtonDown(0))
 		cursor.fill(chunk);
@@ -110,7 +110,7 @@ const draw = function () {
 	// Display.context.fillRect(10, 10, 10, 10);
 
 	Display.context.save();
-	Display.context.scale(10, 10);
+	Display.context.scale(scale, scale);
 
 	chunk.drawPngLike();
 	chunk.draw();
