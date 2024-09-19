@@ -2,7 +2,7 @@ import Cell from "../../../core/cellular/cell.js";
 
 export default class CellFluid extends Cell {
 
-	static step (chunk, x, y) {
+	static step (chunk, cell, x, y) {
 		if (y == chunk.height - 1) {
 			return;
 		}
@@ -11,11 +11,11 @@ export default class CellFluid extends Cell {
 		// const bottomLCell = chunk.getCell(x - 1, y + 1);
 		// const bottomRCell = chunk.getCell(x + 1, y + 1);
 
-		const bottomEmpty = chunk.isCellEmpty(x, y + 1);
-		const bottomLEmpty = chunk.isCellEmpty(x - 1, y + 1);
-		const bottomREmpty = chunk.isCellEmpty(x + 1, y + 1);
-		const leftEmpty = chunk.isCellEmpty(x - 1, y);
-		const rightEmpty = chunk.isCellEmpty(x + 1, y);
+		const bottomEmpty = cell.canPass(chunk, x, y + 1);
+		const bottomLEmpty = cell.canPass(chunk, x - 1, y + 1);
+		const bottomREmpty = cell.canPass(chunk, x + 1, y + 1);
+		const leftEmpty = cell.canPass(chunk, x - 1, y);
+		const rightEmpty = cell.canPass(chunk, x + 1, y);
 
 		const left = Math.random() < 0.5;
 		

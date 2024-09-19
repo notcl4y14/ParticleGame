@@ -2,7 +2,7 @@ import Cell from "../../../core/cellular/cell.js";
 
 export default class CellPowder extends Cell {
 
-	static step (chunk, x, y) {
+	static step (chunk, cell, x, y) {
 		if (y == chunk.height - 1) {
 			return;
 		}
@@ -11,9 +11,9 @@ export default class CellPowder extends Cell {
 		// const bottomLCell = chunk.getCell(x - 1, y + 1);
 		// const bottomRCell = chunk.getCell(x + 1, y + 1);
 
-		const bottomEmpty = chunk.isCellEmpty(x, y + 1);
-		const bottomLEmpty = chunk.isCellEmpty(x - 1, y + 1);
-		const bottomREmpty = chunk.isCellEmpty(x + 1, y + 1);
+		const bottomEmpty = cell.canPass(chunk, x, y + 1);
+		const bottomLEmpty = cell.canPass(chunk, x - 1, y + 1);
+		const bottomREmpty = cell.canPass(chunk, x + 1, y + 1);
 
 		const left = Math.random() < 0.5;
 		
@@ -31,7 +31,13 @@ export default class CellPowder extends Cell {
 			return;
 		}
 
-		chunk.swapCells(x, y, x, y + 1);
+		// if (chunk.getCell(x, y + 1).ID != "water") {
+		// 	chunk.swapCells(x, y, x, y + 1);
+		// 	return;
+		// }
+
+		// chunk.moveAwayCell(x, y, x, y + 1);
+		chunk.moveCell(x, y, x, y + 1);
 	}
 
 }
