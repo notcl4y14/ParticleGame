@@ -30,6 +30,10 @@ export default class Brush {
 		for (let x = 0; x != width; x++) {
 			for (let y = 0; y != height; y++) {
 
+				if (chunk.checkPosOut(x + xPos, y + yPos)) {
+					continue;
+				}
+
 				const cell = this.cell.clone();
 				cell.assignColor();
 				chunk.setCell(cell, x + xPos, y + yPos);

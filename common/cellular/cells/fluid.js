@@ -20,15 +20,16 @@ export default class CellFluid extends Cell {
 		const left = Math.random() < 0.5;
 		
 		if (!bottomEmpty) {
-			if (left && bottomLEmpty) {
-				chunk.swapCells(x, y, x - 1, y + 1);
-				return;
-			}
+			// if (left && bottomLEmpty) {
+			// 	chunk.swapCells(x, y, x - 1, y + 1);
+			// 	return;
+			// }
 
-			if (!left && bottomREmpty) {
-				chunk.swapCells(x, y, x + 1, y + 1);
-				return;
-			}
+			// if (!left && bottomREmpty) {
+			// 	chunk.swapCells(x, y, x + 1, y + 1);
+			// 	return;
+			// }
+
 			if (left && leftEmpty) {
 				chunk.swapCells(x, y, x - 1, y);
 				return;

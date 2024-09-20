@@ -19,7 +19,7 @@ export default class Cell {
 
 	canPass (chunk, x, y) {
 		const cell = chunk.getCell(x, y);
-		return cell !== null && this.density > cell?.density;
+		return !chunk.checkPosOut(x, y) && this.density > cell?.density;
 	}
 
 	// ==== Getters ==== //
