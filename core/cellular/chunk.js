@@ -10,12 +10,12 @@ export default class Chunk {
 
 	area;
 
-	constructor(width, height) {
+	constructor(width, height, createWorld = true) {
 		this.#world = [];
 		this.#width = width;
 		this.#height = height;
 		this.area = this.#width * this.#height;
-		this.#createWorld();
+		if (createWorld) this.#createWorld();
 	}
 
 	// ==== Initializers ==== //
@@ -53,8 +53,33 @@ export default class Chunk {
 	// ==== Misc. ==== //
 
 	clone () {
-		const newInstance = structuredClone(this);
+		// const obj = structuredClone(this);
+		// const newInstance = Object.assign( {}, this, obj );
+		// const newInstance = JSON.parse(JSON.stringify(this));
+		const newInstance = new Chunk(this.#width, this.#height, false);
+
+		var i = 0;
+
+		while (i !== this.area) {
+			const cell = this.#world[i];
+			newInstance.setCellAtIndex(cell, i);
+			i++;
+		}
+
 		return newInstance;
+	}
+
+	copyWorldFrom (chunk) {
+		var newWorld = [];
+
+		var i = 0;
+
+		while (i !== chunk.area) {
+			newWorld[i] = chunk.getCellAtIndex(i);
+			i++;
+		}
+
+		this.#world = newWorld;
 	}
 
 	// ==== Properties ==== //
@@ -73,8 +98,16 @@ export default class Chunk {
 		return this.#world[this.#convertPosIndex(x, y)];
 	}
 
+	getCellAtIndex (index) {
+		return this.#world[index];
+	}
+
 	setCell (cell, x, y) {
 		this.#world[this.#convertPosIndex(x, y)] = cell;
+	}
+
+	setCellAtIndex (cell, index) {
+		this.#world[index] = cell;
 	}
 
 	// ==== Cells ==== //
@@ -111,13 +144,26 @@ export default class Chunk {
 	// ==== Update ==== //
 
 	update () {
-		for (let x = 0; x != this.#width; x++) {
-			for (let y = this.#height - 1; y != -1; y--) {
+		const newChunk = this.clone();
+
+		var x = 0;
+		var y = this.#height - 1;
+
+		while (x !== this.#width) {
+			while (y !== -1) {
+
 				const cell = this.getCell(x, y);
-				// this.#updateCell(cell, x, y);
-				cell.constructor.step(this, cell, x, y);
+				cell.constructor.step(newChunk, cell, x, y);
+
+				y--;
+
 			}
+
+			x++;
+			y = this.#height - 1;
 		}
+
+		this.copyWorldFrom(newChunk);
 	}
 
 	#updateCell (cell, x, y) {

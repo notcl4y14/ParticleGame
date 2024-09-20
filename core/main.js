@@ -80,7 +80,7 @@ const init = function () {
 	// chunk.setCell(cell, 10, 7);
 	// chunk.setCell(cell, 10, 8);
 
-	Brush.fillRect(chunk, 10, 10, 10, 10);
+	// Brush.fillRect(chunk, 10, 10, 10, 10);
 
 	runner.start();
 }
