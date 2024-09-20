@@ -6,7 +6,7 @@ export default class Water extends CellFluid {
 	density = 10;
 
 	getColor () {
-		return "rgb(102, 163, 204)";
+		return "rgba(102, 163, 204, 0.75)";
 	}
 
 }
