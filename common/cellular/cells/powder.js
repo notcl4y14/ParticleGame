@@ -11,9 +11,9 @@ export default class CellPowder extends Cell {
 		// const bottomLCell = chunk.getCell(x - 1, y + 1);
 		// const bottomRCell = chunk.getCell(x + 1, y + 1);
 
-		const bottomEmpty = cell.canPass(chunk, x, y + 1);
-		const bottomLEmpty = cell.canPass(chunk, x - 1, y + 1);
-		const bottomREmpty = cell.canPass(chunk, x + 1, y + 1);
+		const bottomEmpty = cell.canPass(chunk, 0, 1);
+		const bottomLEmpty = cell.canPass(chunk, -1, 1);
+		const bottomREmpty = cell.canPass(chunk, 1, 1);
 
 		const left = Math.random() < 0.5;
 		

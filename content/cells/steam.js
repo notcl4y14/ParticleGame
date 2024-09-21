@@ -14,9 +14,7 @@ export default class Steam extends CellGas {
 	}
 
 	onTempChange (chunk, temperature) {
-		if (temperature < 100) {
-			this.replaceWith(chunk, this.x, this.y, new Water().init());
-		}
+		temperature < 100 ? this.replaceWith(chunk, new Water().init()) : null;
 	}
 
 	isMovable () {

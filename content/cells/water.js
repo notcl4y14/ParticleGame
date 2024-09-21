@@ -12,11 +12,8 @@ export default class Water extends CellFluid {
 	}
 
 	onTempChange (chunk, temperature) {
-		if (temperature >= 100) {
-			this.replaceWith(chunk, this.x, this.y, new Steam().init());
-		} else if (temperature <= 0) {
-			this.replaceWith(chunk, this.x, this.y, new Ice().init());
-		}
+		temperature >= 100 ? this.replaceWith(chunk, new Steam().init()) : null;
+		temperature <= 0   ? this.replaceWith(chunk, new Ice().init())   : null;
 	}
 
 	isMovable () {

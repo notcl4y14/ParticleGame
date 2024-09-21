@@ -1,4 +1,5 @@
 import CellPowder from "../../common/cellular/cells/powder.js";
+import Glass from "./glass.js";
 
 export default class Sand extends CellPowder {
 
@@ -13,6 +14,10 @@ export default class Sand extends CellPowder {
 			index += 1;
 		}
 		return Sand.#colors[index];
+	}
+
+	onTempChange (chunk, temperature) {
+		temperature > 500 ? this.replaceWith(chunk, new Glass().init()) : null;
 	}
 
 	isMovable () {

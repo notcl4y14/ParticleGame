@@ -11,9 +11,9 @@ export default class CellGas extends Cell {
 		// const bottomLCell = chunk.getCell(x - 1, y + 1);
 		// const bottomRCell = chunk.getCell(x + 1, y + 1);
 
-		const topEmpty = cell.canPass(chunk, x, y - 1);
-		const leftEmpty = cell.canPass(chunk, x - 1, y);
-		const rightEmpty = cell.canPass(chunk, x + 1, y);
+		const topEmpty = cell.canPass(chunk, 0, -1);
+		const leftEmpty = cell.canPass(chunk, -1, 0);
+		const rightEmpty = cell.canPass(chunk, 1, 0);
 
 		const left = Math.random() < 0.5;
 		

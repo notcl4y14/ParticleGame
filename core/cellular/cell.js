@@ -27,13 +27,15 @@ export default class Cell {
 	// ==== Chunk/Cell ==== //
 
 	canPass (chunk, x, y) {
+		x += this.x;
+		y += this.y;
 		const cell = chunk.getCell(x, y);
 		return !chunk.checkPosOut(x, y) && this.density > cell?.density;
 	}
 
-	replaceWith (chunk, x, y, cell) {
+	replaceWith (chunk, cell) {
 		cell.temperature = this.temperature;
-		chunk.setCell(cell, x, y);
+		chunk.setCell(cell, this.x, this.y);
 	}
 
 	heat (chunk, delta) {
@@ -44,6 +46,18 @@ export default class Cell {
 	cool (chunk, delta) {
 		this.temperature -= delta;
 		this.onTempChange(chunk, this.temperature);
+	}
+
+	conductHeat (chunk) {
+		const left = chunk.getCell(this.x - 1, this.y);
+		const right = chunk.getCell(this.x + 1, this.y);
+		const top = chunk.getCell(this.x, this.y - 1);
+		const bottom = chunk.getCell(this.x, this.y + 1);
+
+		left.heat(chunk, this.temperature / 8 - 1);
+		right.heat(chunk, this.temperature / 8 - 1);
+		top.heat(chunk, this.temperature / 8 - 1);
+		bottom.heat(chunk, this.temperature / 8 - 1);
 	}
 
 	// ==== Checkers ==== //

@@ -15,9 +15,9 @@ export default class CellFluid extends Cell {
 		const leftCellMovable = leftCell != null ? leftCell.isMovable() : false;
 		const rightCellMovable = rightCell != null ? rightCell.isMovable() : false;
 
-		const bottomEmpty = bottomCellMovable && cell.canPass(chunk, x, y + 1);
-		const leftEmpty = leftCellMovable && cell.canPass(chunk, x - 1, y);
-		const rightEmpty = rightCellMovable && cell.canPass(chunk, x + 1, y);
+		const bottomEmpty = bottomCellMovable && cell.canPass(chunk, 0, 1);
+		const leftEmpty = leftCellMovable && cell.canPass(chunk, -1, 0);
+		const rightEmpty = rightCellMovable && cell.canPass(chunk, 1, 0);
 
 		const left = Math.random() < 0.5;
 		
