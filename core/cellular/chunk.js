@@ -103,10 +103,16 @@ export default class Chunk {
 	}
 
 	setCell (cell, x, y) {
+		cell.x = x;
+		cell.y = y;
+
 		this.#world[this.#convertPosIndex(x, y)] = cell;
 	}
 
 	setCellAtIndex (cell, index) {
+		const [x, y] = this.#convertIndexPos(index);
+		cell.x = x;
+		cell.y = y;
 		this.#world[index] = cell;
 	}
 
@@ -120,6 +126,11 @@ export default class Chunk {
 		const srcCell = this.getCell(srcX, srcY);
 		const destCell = this.getCell(destX, destY);
 
+		srcCell.x = destX;
+		srcCell.y = destY;
+		destCell.x = srcX;
+		destCell.y = srcY;
+
 		this.setCell(srcCell, destX, destY);
 		this.setCell(destCell, srcX, srcY);
 	}
@@ -127,7 +138,10 @@ export default class Chunk {
 	moveCell (srcX, srcY, destX, destY) {
 		const srcCell = this.getCell(srcX, srcY);
 
-		this.setCell(new Air(), srcX, srcY);
+		srcCell.x = destX;
+		srcCell.y = destY;
+
+		this.setCell(new Air().init(), srcX, srcY);
 		this.setCell(srcCell, destX, destY);
 	}
 

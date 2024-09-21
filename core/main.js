@@ -113,6 +113,14 @@ const update = function () {
 
 	if (Mouse.isButtonDown(2))
 		cursor.fillAlt(chunk);
+
+	if (Mouse.isButtonDown(1)) {
+		Brush.heatRect(chunk, 1, cursor.x, cursor.y, cursor.width, cursor.height);
+	}
+
+	if (Mouse.isButtonDown(4)) {
+		Brush.heatRect(chunk, -1, cursor.x, cursor.y, cursor.width, cursor.height);
+	}
 }
 
 const draw = function () {

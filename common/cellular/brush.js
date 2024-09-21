@@ -42,6 +42,32 @@ export default class Brush {
 		}
 		
 	}
+
+	static heatRect (chunk, delta, xPos, yPos, width, height) {
+
+		if (width < 0) {
+			width = Math.abs(width);
+			xPos -= width;
+		}
+
+		if (height < 0) {
+			height = Math.abs(height);
+			yPos -= height;
+		}
+
+		for (let x = 0; x != width; x++) {
+			for (let y = 0; y != height; y++) {
+
+				if (chunk.checkPosOut(x + xPos, y + yPos)) {
+					continue;
+				}
+
+				chunk.getCell(x + xPos, y + yPos).heat(chunk, delta);
+
+			}
+		}
+		
+	}
 }
 
 Brush.cell.assignColor();
