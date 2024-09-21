@@ -190,6 +190,8 @@ export default class Chunk {
 			const [x, y] = this.#convertIndexPos(i);
 			this.#drawTile(this.getCell(x, y), x, y);
 		}
+
+		this.drawHeat();
 	}
 
 	#drawTile (tile, x, y) {
@@ -209,6 +211,21 @@ export default class Chunk {
 		Display.context.fillStyle = tile.color;
 
 		Display.context.fillRect(x, y, 1, 1);
+	}
+
+	drawHeat () {
+		for (let i = 0; i != this.area; i++) {
+			const [x, y] = this.#convertIndexPos(i);
+			const cell = this.getCell(x, y);
+
+			if (cell.ID == "air") {
+				continue;
+			}
+			
+			const heat = cell.temperature > 50 ? cell.temperature * 0.001 : 0;
+			Display.context.fillStyle = "rgba(255, 128, 0, " + heat + ")";
+			Display.context.fillRect(x, y, 1, 1);
+		}
 	}
 
 	drawPngLike() {
