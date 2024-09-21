@@ -15,4 +15,8 @@ export default class Sand extends CellPowder {
 		return Sand.#colors[index];
 	}
 
+	isMovable () {
+		return true;
+	}
+
 }
