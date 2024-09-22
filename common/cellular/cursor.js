@@ -9,6 +9,7 @@ import Stone from "../../content/cells/stone.js";
 import Steam from "../../content/cells/steam.js";
 import Ice from "../../content/cells/ice.js";
 import Glass from "../../content/cells/glass.js";
+import Soil from "../../content/cells/soil.js";
 
 export default class Cursor {
 
@@ -60,6 +61,10 @@ export default class Cursor {
 
 			case 6:
 				this.primaryCell = new Glass();
+				break;
+
+			case 7:
+				this.primaryCell = new Soil();
 				break;
 		}
 	}
