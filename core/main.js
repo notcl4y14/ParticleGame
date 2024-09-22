@@ -9,10 +9,10 @@ import Mouse from "./mouse.js";
 import Runner from "./runner.js";
 
 const runner = new Runner();
-const chunk = new Chunk(64, 64);
+const chunk = new Chunk(128, 128);
 const cursor = new Cursor();
 
-const scale = 5;
+const scale = 4;
 
 // ==== Window ==== //
 
@@ -131,6 +131,8 @@ const draw = function () {
 
 	Display.context.save();
 	Display.context.scale(scale, scale);
+
+	Display.context.imageSmoothingEnabled = false;
 
 	chunk.drawPngLike();
 	chunk.draw();

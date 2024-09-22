@@ -1,6 +1,7 @@
 import Air from "../../content/cells/air.js";
 import Display from "../display.js";
 import Cell from "./cell.js";
+import RGBColor from "../../util/rgbcolor.js";
 
 export default class Chunk {
 
@@ -186,15 +187,32 @@ export default class Chunk {
 	// ==== Draw ==== //
 
 	draw () {
+		const imageData = Display.context.createImageData(this.#width, this.#height);
+
 		for (let i = 0; i != this.area; i++) {
 			const [x, y] = this.#convertIndexPos(i);
-			this.#drawTile(this.getCell(x, y), x, y);
+			this.#drawTile(this.getCell(x, y), x, y, imageData);
 		}
+
+		// window.onkeydown = () => {
+		// 	console.log(imageData.data);
+		// 	debugger;
+
+		// }
+
+		const newContext = document.createElement("canvas").getContext("2d");
+		newContext.imageSmoothingEnabled = false;
+		// newContext.width = this.#width;
+		// newContext.height = this.#height;
+		newContext.putImageData(imageData, 0, 0, 0, 0, this.#width, this.#height);
+
+		Display.context.drawImage(newContext.canvas, 0, 0);
+		// Display.context.putImageData(imageData, 0, 0);
 
 		this.drawHeat();
 	}
 
-	#drawTile (tile, x, y) {
+	#drawTile (cell, x, y, imageData) {
 		// switch (tile.ID) {
 		// 	case 0:
 		// 		return;
@@ -204,13 +222,31 @@ export default class Chunk {
 		// 		break;
 		// }
 
-		if (tile.ID == "air") {
+		if (cell.ID == "air") {
 			return;
 		}
 
-		Display.context.fillStyle = tile.color;
+		const rgbColor = new RGBColor(cell.color);
+		const colorR = rgbColor.r;
+		const colorG = rgbColor.g;
+		const colorB = rgbColor.b;
+		const colorA = rgbColor.a;
 
-		Display.context.fillRect(x, y, 1, 1);
+		const pixelIndex = y * imageData.width + x;
+		const dataIndex = pixelIndex * 4;
+
+		// console.log(cell.color, rgbColor);
+		// debugger;
+
+		// console.log(colorR, colorG, colorB, colorA);
+		
+		imageData.data[dataIndex] = colorR;
+		imageData.data[dataIndex + 1] = colorG;
+		imageData.data[dataIndex + 2] = colorB;
+		imageData.data[dataIndex + 3] = colorA * 255;
+
+		// Display.context.fillStyle = cell.color;
+		// Display.context.fillRect(x, y, 1, 1);
 	}
 
 	drawHeat () {
@@ -229,13 +265,38 @@ export default class Chunk {
 	}
 
 	drawPngLike() {
-		for (let x = 0; x != this.#width; x++) {
-			for (let y = 0; y != this.#height; y++) {
-				const color = (x + y) % 2 == 0 ? "#555555" : "#222222";
-				Display.context.fillStyle = color;
-				Display.context.fillRect(x, y, 1, 1);
+		const imageData = Display.context.createImageData(this.#width, this.#height);
+		var even = true;
+
+		for (let i = 0; i !== this.area; i++) {
+			const color = even ? [85, 85, 85, 255] : [34, 34, 34, 255];
+			const index = i * 4;
+			imageData.data[index] = color[0];
+			imageData.data[index + 1] = color[1];
+			imageData.data[index + 2] = color[2];
+			imageData.data[index + 3] = color[3];
+
+			even = !even;
+
+			if ((i + 1) % this.#width == 0) {
+				even = !even;
 			}
 		}
+
+		const newContext = document.createElement("canvas").getContext("2d");
+		newContext.imageSmoothingEnabled = false;
+		newContext.putImageData(imageData, 0, 0, 0, 0, this.#width, this.#height);
+
+		Display.context.drawImage(newContext.canvas, 0, 0);
+
+		// for (let x = 0; x != this.#width; x++) {
+		// 	for (let y = 0; y != this.#height; y++) {
+		// 		// const color = (x + y) % 2 == 0 ? [85, 85, 85, 255] : [34, 34, 34, 255];
+		// 		// const color = (x + y) % 2 == 0 ? "#555555" : "#222222";
+		// 		// Display.context.fillStyle = color;
+		// 		// Display.context.fillRect(x, y, 1, 1);
+		// 	}
+		// }
 	}
 
 	drawBorders () {
