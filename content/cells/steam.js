@@ -10,7 +10,7 @@ export default class Steam extends CellGas {
 	temperature = 100;
 
 	getColor () {
-		return "rgba(199, 225, 242, 0.85)";
+		return [199, 225, 242, 0.85];
 	}
 
 	onTempChange (chunk, temperature) {

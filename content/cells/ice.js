@@ -10,7 +10,7 @@ export default class Ice extends CellSolid {
 	temperature = 0;
 
 	getColor() {
-		return "rgba(174, 215, 242, 0.85)";
+		return [174, 215, 242, 0.85];
 	}
 
 	onTempChange (chunk, temperature) {

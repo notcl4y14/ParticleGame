@@ -6,7 +6,7 @@ export default class Soil extends CellPowder {
 	ID = "soil";
 	density = 2;
 
-	static #colors = ["rgb(92, 50, 33)", "rgb(125, 71, 49)", "rgb(84, 58, 48)"];
+	static #colors = [ [92, 50, 33], [125, 71, 49], [84, 58, 48] ];
 
 	getColor() {
 		var index = Math.floor(Math.random() * (Soil.#colors.length - 1));

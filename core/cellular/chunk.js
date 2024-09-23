@@ -259,11 +259,11 @@ export default class Chunk {
 			return;
 		}
 
-		const rgbColor = new RGBColor(cell.color);
-		const colorR = rgbColor.r;
-		const colorG = rgbColor.g;
-		const colorB = rgbColor.b;
-		const colorA = rgbColor.a;
+		// const rgbColor = new RGBColor(cell.color);
+		// const colorR = rgbColor.r;
+		// const colorG = rgbColor.g;
+		// const colorB = rgbColor.b;
+		// const colorA = rgbColor.a;
 
 		const pixelIndex = y * imageData.width + x;
 		const dataIndex = pixelIndex * 4;
@@ -273,10 +273,10 @@ export default class Chunk {
 
 		// console.log(colorR, colorG, colorB, colorA);
 		
-		imageData.data[dataIndex] = colorR;
-		imageData.data[dataIndex + 1] = colorG;
-		imageData.data[dataIndex + 2] = colorB;
-		imageData.data[dataIndex + 3] = colorA * 255;
+		imageData.data[dataIndex] = cell.color[0];
+		imageData.data[dataIndex + 1] = cell.color[1];
+		imageData.data[dataIndex + 2] = cell.color[2];
+		imageData.data[dataIndex + 3] = cell.color[3] ? cell.color[3] * 255 : 255;
 
 		// Display.context.fillStyle = cell.color;
 		// Display.context.fillRect(x, y, 1, 1);
@@ -314,6 +314,8 @@ export default class Chunk {
 	}
 
 	drawHeat () {
+		const imageData = Display.context.createImageData(this.#width, this.#height);
+
 		for (let i = 0; i != this.area; i++) {
 			const [x, y] = this.#convertIndexPos(i);
 			const cell = this.getCell(x, y);
@@ -323,9 +325,22 @@ export default class Chunk {
 			}
 			
 			const heat = cell.temperature > 50 ? cell.temperature * 0.001 : 0;
-			Display.context.fillStyle = "rgba(255, 128, 0, " + heat + ")";
-			Display.context.fillRect(x, y, 1, 1);
+
+			const index = i * 4;
+
+			imageData.data[index] = 255;
+			imageData.data[index + 1] = 128;
+			imageData.data[index + 2] = 0;
+			imageData.data[index + 3] = heat * 255;
+			// Display.context.fillStyle = "rgba(255, 128, 0, " + heat + ")";
+			// Display.context.fillRect(x, y, 1, 1);
 		}
+
+		const newContext = document.createElement("canvas").getContext("2d");
+		newContext.imageSmoothingEnabled = false;
+		newContext.putImageData(imageData, 0, 0, 0, 0, this.#width, this.#height);
+
+		Display.context.drawImage(newContext.canvas, 0, 0);
 	}
 
 	drawPngLike() {

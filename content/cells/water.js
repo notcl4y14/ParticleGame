@@ -8,7 +8,7 @@ export default class Water extends CellFluid {
 	density = 10;
 
 	getColor () {
-		return "rgba(102, 163, 204, 0.75)";
+		return [102, 163, 204, 0.75];
 	}
 
 	onTempChange (chunk, temperature) {
