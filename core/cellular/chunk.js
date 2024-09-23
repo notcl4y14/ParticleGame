@@ -161,6 +161,13 @@ export default class Chunk {
 	update () {
 		const newChunk = this.clone();
 
+		// const segments = 4;
+		// const segmentWidth = this.#width / segments;
+
+		// for (let i = 0; i < segments; i++) {
+		// 	this.updateChunk(newChunk, i * segmentWidth, 0, segmentWidth, this.#height);
+		// }
+
 		var x = 0;
 		var y = this.#height - 1;
 
@@ -168,6 +175,12 @@ export default class Chunk {
 			while (y !== -1) {
 
 				const cell = this.getCell(x, y);
+
+				if (cell.isSleeping) {
+					y--;
+					continue;
+				}
+
 				cell.constructor.step(newChunk, cell, x, y);
 
 				y--;
@@ -180,6 +193,26 @@ export default class Chunk {
 
 		this.copyWorldFrom(newChunk);
 	}
+
+	async updateChunk (chunk, xPos, yPos, width, height) {
+		var x = 0;
+		var y = height - 1;
+
+		while (x !== width) {
+			while (y !== -1) {
+
+				const cell = chunk.getCell(x + xPos, y + yPos);
+				cell.constructor.step(chunk, cell, x + xPos, y + yPos);
+
+				y--;
+
+			}
+
+			x++;
+			y = height - 1;
+		}
+	}
+
 
 	#updateCell (cell, x, y) {
 	}
@@ -247,6 +280,37 @@ export default class Chunk {
 
 		// Display.context.fillStyle = cell.color;
 		// Display.context.fillRect(x, y, 1, 1);
+	}
+
+	drawSleepMap (alpha = 255) {
+		const imageData = Display.context.createImageData(this.#width, this.#height);
+
+		for (let i = 0; i != this.area; i++) {
+			const [x, y] = this.#convertIndexPos(i);
+			const cell = this.getCell(x, y);
+
+			if (cell.ID == "air") {
+				continue;
+			}
+			
+			const isSleeping = cell.isSleeping;
+
+			const color = isSleeping ? [255, 0, 0] : [0, 0, 255];
+
+			const pixelIndex = y * imageData.width + x;
+			const dataIndex = pixelIndex * 4;
+
+			imageData.data[dataIndex] = color[0];
+			imageData.data[dataIndex + 1] = color[1];
+			imageData.data[dataIndex + 2] = color[2];
+			imageData.data[dataIndex + 3] = alpha;
+		}
+
+		const newContext = document.createElement("canvas").getContext("2d");
+		newContext.imageSmoothingEnabled = false;
+		newContext.putImageData(imageData, 0, 0, 0, 0, this.#width, this.#height);
+
+		Display.context.drawImage(newContext.canvas, 0, 0);
 	}
 
 	drawHeat () {

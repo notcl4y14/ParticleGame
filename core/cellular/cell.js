@@ -1,11 +1,16 @@
 export default class Cell {
 
+	static sleepCountMax = 20;
+
 	ID;
 	color;
 	density;
 
 	x = 0;
 	y = 0;
+
+	sleepCount = 0;
+	isSleeping = false;
 
 	temperature = 15;
 
@@ -36,6 +41,24 @@ export default class Cell {
 	replaceWith (chunk, cell) {
 		cell.temperature = this.temperature;
 		chunk.setCell(cell, this.x, this.y);
+	}
+
+	sleep () {
+		if (this.sleepCount++ >= Cell.sleepCountMax) {
+			this.isSleeping = true;
+		}
+	}
+
+	wakeUp () {
+		this.sleepCount = 0;
+		this.isSleeping = false;
+	}
+
+	wakeUpNeighbors (chunk) {
+		chunk.getCell(this.x - 1, this.y)?.wakeUp();
+		chunk.getCell(this.x + 1, this.y)?.wakeUp();
+		chunk.getCell(this.x, this.y - 1)?.wakeUp();
+		chunk.getCell(this.x, this.y + 1)?.wakeUp();
 	}
 
 	heat (chunk, delta) {

@@ -4,6 +4,7 @@ export default class CellFluid extends Cell {
 
 	static step (chunk, cell, x, y) {
 		if (y == chunk.height - 1) {
+			cell.sleep();
 			return;
 		}
 
@@ -24,18 +25,23 @@ export default class CellFluid extends Cell {
 		if (!bottomEmpty) {
 
 			if (left && leftEmpty) {
+				cell.wakeUpNeighbors(chunk);
 				chunk.swapCells(x, y, x - 1, y);
 				return;
 			}
 
 			if (!left && rightEmpty) {
+				cell.wakeUpNeighbors(chunk);
 				chunk.swapCells(x, y, x + 1, y);
 				return;
 			}
+
+			cell.sleep();
 			
 			return;
 		}
 
+		cell.wakeUpNeighbors(chunk);
 		chunk.swapCells(x, y, x, y + 1);
 	}
 

@@ -4,6 +4,7 @@ export default class CellPowder extends Cell {
 
 	static step (chunk, cell, x, y) {
 		if (y == chunk.height - 1) {
+			cell.sleep();
 			return;
 		}
 
@@ -19,14 +20,18 @@ export default class CellPowder extends Cell {
 		
 		if (!bottomEmpty) {
 			if (left && bottomLEmpty) {
+				cell.wakeUpNeighbors(chunk);
 				chunk.swapCells(x, y, x - 1, y + 1);
 				return;
 			}
 
 			if (!left && bottomREmpty) {
+				cell.wakeUpNeighbors(chunk);
 				chunk.swapCells(x, y, x + 1, y + 1);
 				return;
 			}
+
+			cell.sleep();
 			
 			return;
 		}
@@ -37,6 +42,7 @@ export default class CellPowder extends Cell {
 		// }
 
 		// chunk.moveAwayCell(x, y, x, y + 1);
+		cell.wakeUpNeighbors(chunk);
 		chunk.moveCell(x, y, x, y + 1);
 	}
 
