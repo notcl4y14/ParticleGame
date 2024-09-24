@@ -10,6 +10,7 @@ import Steam from "../../content/cells/steam.js";
 import Ice from "../../content/cells/ice.js";
 import Glass from "../../content/cells/glass.js";
 import Soil from "../../content/cells/soil.js";
+import Lava from "../../content/cells/lava.js";
 
 export default class Cursor {
 
@@ -65,6 +66,10 @@ export default class Cursor {
 
 			case 7:
 				this.primaryCell = new Soil();
+				break;
+
+			case 8:
+				this.primaryCell = new Lava();
 				break;
 		}
 	}
