@@ -43,6 +43,8 @@ export default class Cell {
 		chunk.setCell(cell, this.x, this.y);
 	}
 
+	// Sleeping
+
 	sleep () {
 		if (this.sleepCount++ >= Cell.sleepCountMax) {
 			this.isSleeping = true;
@@ -60,6 +62,8 @@ export default class Cell {
 		chunk.getCell(this.x, this.y - 1)?.wakeUp();
 		chunk.getCell(this.x, this.y + 1)?.wakeUp();
 	}
+
+	// Temperature
 
 	heat (chunk, delta) {
 		this.temperature += delta;
@@ -86,6 +90,18 @@ export default class Cell {
 	// ==== Checkers ==== //
 
 	isMovable () {
+		return false;
+	}
+
+	isFluid () {
+		return false;
+	}
+
+	isSolid () {
+		return false;
+	}
+
+	isGas () {
 		return false;
 	}
 

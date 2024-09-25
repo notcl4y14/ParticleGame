@@ -8,13 +8,17 @@ export default class CellPowder extends Cell {
 			return;
 		}
 
-		// const bottomCell = chunk.getCell(x, y + 1);
-		// const bottomLCell = chunk.getCell(x - 1, y + 1);
-		// const bottomRCell = chunk.getCell(x + 1, y + 1);
+		const bottomCell = chunk.getCell(x, y + 1);
+		const bottomLCell = chunk.getCell(x - 1, y + 1);
+		const bottomRCell = chunk.getCell(x + 1, y + 1);
 
-		const bottomEmpty = cell.canPass(chunk, 0, 1);
-		const bottomLEmpty = cell.canPass(chunk, -1, 1);
-		const bottomREmpty = cell.canPass(chunk, 1, 1);
+		const bottomCellFluid = bottomCell != null ? bottomCell.ID == "air" || bottomCell.isFluid() : false;
+		const bottomLCellFluid = bottomLCell != null ? bottomLCell.ID == "air" || bottomLCell.isFluid() : false;
+		const bottomRCellFluid = bottomRCell != null ? bottomRCell.ID == "air" || bottomRCell.isFluid() : false;
+
+		const bottomEmpty = bottomCellFluid && cell.canPass(chunk, 0, 1);
+		const bottomLEmpty = bottomLCellFluid && cell.canPass(chunk, -1, 1);
+		const bottomREmpty = bottomRCellFluid && cell.canPass(chunk, 1, 1);
 
 		const left = Math.random() < 0.5;
 		

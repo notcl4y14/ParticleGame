@@ -45,4 +45,8 @@ export default class CellFluid extends Cell {
 		chunk.swapCells(x, y, x, y + 1);
 	}
 
+	isFluid () {
+		return true;
+	}
+
 }

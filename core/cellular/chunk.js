@@ -235,8 +235,8 @@ export default class Chunk {
 
 		const newContext = document.createElement("canvas").getContext("2d");
 		newContext.imageSmoothingEnabled = false;
-		// newContext.width = this.#width;
-		// newContext.height = this.#height;
+		newContext.width = this.#width;
+		newContext.height = this.#height;
 		newContext.putImageData(imageData, 0, 0, 0, 0, this.#width, this.#height);
 
 		Display.context.drawImage(newContext.canvas, 0, 0);
@@ -308,6 +308,8 @@ export default class Chunk {
 
 		const newContext = document.createElement("canvas").getContext("2d");
 		newContext.imageSmoothingEnabled = false;
+		newContext.width = this.#width;
+		newContext.height = this.#height;
 		newContext.putImageData(imageData, 0, 0, 0, 0, this.#width, this.#height);
 
 		Display.context.drawImage(newContext.canvas, 0, 0);
@@ -338,6 +340,8 @@ export default class Chunk {
 
 		const newContext = document.createElement("canvas").getContext("2d");
 		newContext.imageSmoothingEnabled = false;
+		newContext.width = this.#width;
+		newContext.height = this.#height;
 		newContext.putImageData(imageData, 0, 0, 0, 0, this.#width, this.#height);
 
 		Display.context.drawImage(newContext.canvas, 0, 0);
@@ -364,6 +368,8 @@ export default class Chunk {
 
 		const newContext = document.createElement("canvas").getContext("2d");
 		newContext.imageSmoothingEnabled = false;
+		newContext.width = this.#width;
+		newContext.height = this.#height;
 		newContext.putImageData(imageData, 0, 0, 0, 0, this.#width, this.#height);
 
 		Display.context.drawImage(newContext.canvas, 0, 0);
