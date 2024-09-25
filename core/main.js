@@ -9,7 +9,7 @@ import Mouse from "./mouse.js";
 import Runner from "./runner.js";
 
 const runner = new Runner();
-const chunk = new Chunk(128, 128);
+const chunk = new Chunk(256, 128);
 const cursor = new Cursor();
 
 const scale = 4;
@@ -136,6 +136,7 @@ const draw = function () {
 
 	chunk.drawPngLike();
 	chunk.draw();
+	// chunk.drawSleepMap(128);
 	chunk.drawBorders();
 
 	cursor.draw();
