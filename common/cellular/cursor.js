@@ -12,6 +12,8 @@ import Glass from "../../content/cells/glass.js";
 import Soil from "../../content/cells/soil.js";
 import Lava from "../../content/cells/lava.js";
 import Gravel from "../../content/cells/gravel.js";
+import Clay from "../../content/cells/clay.js";
+import Ceramic from "../../content/cells/ceramic.js";
 
 export default class Cursor {
 
@@ -75,6 +77,14 @@ export default class Cursor {
 
 			case 9:
 				this.primaryCell = new Gravel();
+				break;
+
+			case 10:
+				this.primaryCell = new Clay();
+				break;
+
+			case 11:
+				this.primaryCell = new Ceramic();
 				break;
 		}
 	}

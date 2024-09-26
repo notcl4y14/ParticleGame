@@ -57,6 +57,11 @@ window.onkeydown = (event) => {
 		const digit = key[5];
 		cursor.setCellByID(parseInt(digit));
 	}
+
+	if (key == "Backquote") {
+		const ID = prompt("Cell ID:");
+		cursor.setCellByID(parseInt(ID));
+	}
 }
 
 // ==== Init ==== //
