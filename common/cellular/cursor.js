@@ -16,6 +16,7 @@ import Clay from "../../content/cells/clay.js";
 import Ceramic from "../../content/cells/ceramic.js";
 import Coal from "../../content/cells/coal.js";
 import Snow from "../../content/cells/snow.js";
+import Wood from "../../content/cells/wood.js";
 
 export default class Cursor {
 
@@ -95,6 +96,10 @@ export default class Cursor {
 
 			case 13:
 				this.primaryCell = new Snow();
+				break;
+
+			case 14:
+				this.primaryCell = new Wood();
 				break;
 		}
 	}
