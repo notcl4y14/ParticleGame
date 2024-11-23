@@ -14,6 +14,8 @@ const cursor = new Cursor();
 
 const scale = 4;
 
+let tempMode = 1;
+
 // ==== Window ==== //
 
 window.onload = () => {
@@ -61,6 +63,10 @@ window.onkeydown = (event) => {
 	if (key == "Backquote") {
 		const ID = prompt("Cell ID:");
 		cursor.setCellByID(parseInt(ID));
+	}
+
+	if (key == "KeyQ") {
+		tempMode = -tempMode;
 	}
 }
 
@@ -120,11 +126,7 @@ const update = function () {
 		cursor.fillAlt(chunk);
 
 	if (Mouse.isButtonDown(1)) {
-		Brush.heatRect(chunk, 1, cursor.x, cursor.y, cursor.width, cursor.height);
-	}
-
-	if (Mouse.isButtonDown(4)) {
-		Brush.heatRect(chunk, -1, cursor.x, cursor.y, cursor.width, cursor.height);
+		Brush.heatRect(chunk, tempMode, cursor.x, cursor.y, cursor.width, cursor.height);
 	}
 }
 
@@ -148,6 +150,7 @@ const draw = function () {
 
 	Display.context.restore();
 
-	Display.context.fillStyle = "#000000";
+	Display.context.fillStyle = "#ffffff";
 	Display.context.fillText("FPS: " + Math.floor(runner.FPS), 0, 10);
+	Display.context.fillText("Temperature Mode: " + (tempMode == 1 ? "Heat" : "Cool") + " (" + tempMode + ")", 0, 20);
 }

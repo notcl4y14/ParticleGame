@@ -37,6 +37,7 @@ export default class Brush {
 				const cell = this.cell.clone();
 				cell.assignColor();
 				chunk.setCell(cell, x + xPos, y + yPos);
+				chunk.getCell(x + xPos, y + yPos).wakeUpNeighbors(chunk);
 
 			}
 		}
